@@ -62,32 +62,39 @@ Promise.all(
     if (isTS) {
       pkg.files = ['dist'];
 
-      pkg.devDependencies = pkg.devDependencies ?? {};
-      pkg.devDependencies['tshy'] = versions['tshy'];
-
-      pkg.tshy = pkg.tshy ?? {};
-      pkg.tshy.exclude = ['src/**/*.test.ts'];
-
       pkg.scripts = pkg.scripts ?? {};
-      pkg.scripts.tsc = 'tshy';
-
-      // Only set attw if the package is using commonjs
-      const shouldUseAttw =
-        !Array.isArray(pkg.tshy.dialects) || pkg.tshy.dialects.includes('commonjs');
-      pkg.scripts.attw = shouldUseAttw ? 'attw --pack' : undefined;
-      if (shouldUseAttw) {
-        pkg.devDependencies['@arethetypeswrong/cli'] = versions['@arethetypeswrong/cli'];
-      }
+      pkg.scripts.tsc = 'tsc -p tsconfig.json';
 
       const tsconfig = (await fileExists(path.join(dir, 'tsconfig.json')))
         ? await readJSONFile(path.join(dir, 'tsconfig.json'))
         : { extends: '@repo/tsconfig' };
+      tsconfig.include = ['src'];
+      tsconfig.exclude = ['src/**/*.test.ts'];
+      tsconfig.compilerOptions = tsconfig.compilerOptions ?? {};
+      tsconfig.compilerOptions.outDir = 'dist';
+
+      pkg.exports = {
+        ...pkg.exports,
+        './package.json': './package.json',
+        '.': {
+          types: './dist/index.d.ts',
+          default: './dist/index.js',
+        },
+      };
+
+      // Remove legacy exports definitions
+      pkg.main = undefined;
+      pkg.types = undefined;
+      pkg.module = undefined;
+      pkg.tshy = undefined;
+
       writeFile(
         path.join(dir, 'tsconfig.json'),
         JSON.stringify(tsconfig, null, 2) + '\n',
       );
 
       if (tsconfig.extends === '@repo/tsconfig') {
+        pkg.devDependencies = pkg.devDependencies ?? {};
         pkg.devDependencies['@repo/tsconfig'] = 'workspace:*';
       }
     }

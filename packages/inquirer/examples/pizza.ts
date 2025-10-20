@@ -3,23 +3,23 @@
  * run example by writing `node pizza.mjs` in your console
  */
 
-import inquirer from '../dist/esm/index.js';
+import inquirer from 'inquirer';
 
 console.log('Hi, welcome to Node Pizza');
 
 const questions = [
   {
-    type: 'confirm',
+    type: 'confirm' as const,
     name: 'toBeDelivered',
     message: 'Is this for delivery?',
     default: false,
-    transformer: (answer) => (answer ? '👍' : '👎'),
+    transformer: (answer: boolean) => (answer ? '👍' : '👎'),
   },
   {
-    type: 'input',
+    type: 'input' as const,
     name: 'phone',
     message: "What's your phone number?",
-    validate(value) {
+    validate(value: string) {
       const pass = value.match(
         /^([01])?[\s.-]?\(?(\d{3})\)?[\s.-]?(\d{3})[\s.-]?(\d{4})\s?((?:#|ext\.?\s?|x\.?\s?)(?:\d+)?)?$/i,
       );
@@ -31,26 +31,26 @@ const questions = [
     },
   },
   {
-    type: 'list',
+    type: 'list' as const,
     name: 'size',
     message: 'What size do you need?',
     choices: ['Large', 'Medium', 'Small'],
-    filter(val) {
+    filter(val: string) {
       return val.toLowerCase();
     },
   },
   {
-    type: 'input',
+    type: 'input' as const,
     name: 'quantity',
     message: 'How many do you need?',
-    validate(value) {
+    validate(value: string) {
       const valid = !Number.isNaN(Number.parseFloat(value));
       return valid || 'Please enter a number';
     },
     filter: Number,
   },
   {
-    type: 'expand',
+    type: 'expand' as const,
     name: 'toppings',
     message: 'What about the toppings?',
     choices: [
@@ -72,29 +72,30 @@ const questions = [
     ],
   },
   {
-    type: 'rawlist',
+    type: 'rawlist' as const,
     name: 'beverage',
     message: 'You also get a free 2L beverage',
     choices: ['Pepsi', '7up', 'Coke'],
   },
   {
-    type: 'input',
+    type: 'input' as const,
     name: 'comments',
     message: 'Any comments on your purchase experience?',
     default: 'Nope, all good!',
   },
   {
-    type: 'list',
+    type: 'list' as const,
     name: 'prize',
     message: 'For leaving a comment, you get a freebie',
     choices: ['cake', 'fries'],
-    when(answers) {
-      return answers.comments !== 'Nope, all good!';
+    when(answers: Record<string, unknown>) {
+      return answers['comments'] !== 'Nope, all good!';
     },
   },
 ];
 
-inquirer.prompt(questions).then((answers) => {
+// @ts-expect-error - TS has issues with inferring the correct type for arrays of questions
+void inquirer.prompt(questions).then((answers) => {
   console.log('\nOrder receipt:');
   console.log(JSON.stringify(answers, null, '  '));
 });

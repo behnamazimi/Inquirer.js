@@ -64,14 +64,18 @@
   },
   "type": "module",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "exports": {
+      "./package.json": "package.json",
+      ".": {
+        "types": "dist/index.d.ts",
+        "default": "dist/index.js"
+      }
+    }
   },
   "exports": {
     "./package.json": "./package.json",
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
+    ".": "./src/index.ts"
   },
   "homepage": "https://github.com/SBoudrias/Inquirer.js/blob/main/packages/ansi/README.md"
 }

@@ -1510,6 +1510,8 @@ __metadata:
 "@repo/hoist-peer-dependencies@workspace:*, @repo/hoist-peer-dependencies@workspace:internals/hoist-peer-dependencies":
   version: 0.0.0-use.local
   resolution: "@repo/hoist-peer-dependencies@workspace:internals/hoist-peer-dependencies"
+  dependencies:
+    package-json-type: "npm:^1.0.3"
   languageName: unknown
   linkType: soft
 
@@ -6405,6 +6407,13 @@ __metadata:
   version: 1.0.0
   resolution: "package-json-from-dist@npm:1.0.0"
   checksum: 10/ac706ec856a5a03f5261e4e48fa974f24feb044d51f84f8332e2af0af04fbdbdd5bbbfb9cbbe354190409bc8307c83a9e38c6672c3c8855f709afb0006a009ea
+  languageName: node
+  linkType: hard
+
+"package-json-type@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "package-json-type@npm:1.0.3"
+  checksum: 10/d08531813dd70644f4a9132e5f4839645535f55ed167b430985e6a80487d3a1ad4aa9ff43066208ec2adf8f288818ee743ba1cdda0d049b8ebc9e94f6f458ca4
   languageName: node
   linkType: hard
 

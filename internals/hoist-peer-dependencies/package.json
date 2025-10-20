@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "main": "index.js",
+  "main": "index.ts",
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "package-json-type": "^1.0.3"
   }
 }

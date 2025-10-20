@@ -1,18 +1,15 @@
-// @ts-check
-
 import { writeFileSync } from 'node:fs';
 import Module from 'node:module';
+import { type IPackageJson } from 'package-json-type';
+
 const require = Module.createRequire(import.meta.url);
 
-/**
- * @param {string} target
- */
-export function fixPeerDeps(target) {
+export function fixPeerDeps(target: string) {
   const pkg = require(`${target}/package.json`);
 
   for (const name of Object.keys(pkg.dependencies ?? {})) {
     // Import the dependency package.json file and parse it
-    let depPkg;
+    let depPkg: IPackageJson;
     try {
       depPkg = require(`${name}/package.json`);
     } catch {

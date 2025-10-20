@@ -54,10 +54,7 @@
   "type": "module",
   "exports": {
     "./package.json": "./package.json",
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
+    ".": "./src/index.ts"
   },
   "files": [
     "dist"
@@ -95,6 +92,13 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "exports": {
+      "./package.json": "package.json",
+      ".": {
+        "types": "dist/index.d.ts",
+        "default": "dist/index.js"
+      }
+    }
   }
 }

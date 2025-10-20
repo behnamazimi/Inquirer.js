@@ -3,16 +3,16 @@
  * Allows user to choose when to exit prompt
  */
 
-import inquirer from '../dist/esm/index.js';
+import inquirer from 'inquirer';
 
 const questions = [
   {
-    type: 'input',
+    type: 'input' as const,
     name: 'tvShow',
     message: "What's your favorite TV show?",
   },
   {
-    type: 'confirm',
+    type: 'confirm' as const,
     name: 'askAgain',
     message: 'Want to enter another TV show favorite (just hit enter for YES)?',
     default: true,
@@ -20,11 +20,11 @@ const questions = [
 ];
 
 function ask() {
-  const output = [];
+  const output: string[] = [];
 
-  inquirer.prompt(questions).then((answers) => {
-    output.push(answers.tvShow);
-    if (answers.askAgain) {
+  void inquirer.prompt(questions).then((answers) => {
+    output.push(answers['tvShow']);
+    if (answers['askAgain']) {
       ask();
     } else {
       console.log('Your favorite TV Shows:', output.join(', '));

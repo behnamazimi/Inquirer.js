@@ -76,21 +76,24 @@ type QuestionWithGetters<
 >;
 
 export type UnnamedDistinctQuestion<A extends Answers = object> =
-  | QuestionWithGetters<
-      'checkbox',
-      Parameters<typeof checkbox>[0] & { default: unknown[] },
-      A
-    >
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+  | QuestionWithGetters<'checkbox', Parameters<typeof checkbox>[0], A>
   | QuestionWithGetters<'confirm', Parameters<typeof confirm>[0], A>
   | QuestionWithGetters<'editor', Parameters<typeof editor>[0], A>
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-type-constituents, @typescript-eslint/no-redundant-type-constituents
   | QuestionWithGetters<'expand', Parameters<typeof expand>[0], A>
   | QuestionWithGetters<'input', Parameters<typeof input>[0], A>
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-type-constituents, @typescript-eslint/no-redundant-type-constituents
   | QuestionWithGetters<'number', Parameters<typeof number>[0], A>
   | QuestionWithGetters<'password', Parameters<typeof password>[0], A>
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-type-constituents, @typescript-eslint/no-redundant-type-constituents
   | QuestionWithGetters<'rawlist', Parameters<typeof rawlist>[0], A>
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-type-constituents, @typescript-eslint/no-redundant-type-constituents
   | QuestionWithGetters<'search', Parameters<typeof search>[0], A>
   // Alias list type to select; it's been renamed.
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-type-constituents, @typescript-eslint/no-redundant-type-constituents
   | QuestionWithGetters<'list', Parameters<typeof select>[0], A>
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-type-constituents, @typescript-eslint/no-redundant-type-constituents
   | QuestionWithGetters<'select', Parameters<typeof select>[0], A>;
 
 export type DistinctQuestion<A extends Answers = Answers> = Prettify<

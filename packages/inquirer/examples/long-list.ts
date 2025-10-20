@@ -2,9 +2,12 @@
  * Paginated list
  */
 
-import inquirer from '../dist/esm/index.js';
+import inquirer from 'inquirer';
 
-const choices = Array.apply(0, Array.from({ length: 26 })).map((x, y) =>
+// @ts-expect-error - TS has issues with Apply.apply signature
+const choices: Array<
+  string | inquirer.Separator | { name: string; value: string; short: string }
+> = Array.apply(0, Array.from({ length: 26 })).map((_x, y) =>
   String.fromCodePoint(y + 65),
 );
 choices.push(
@@ -22,17 +25,18 @@ choices.push(
   },
 );
 
-inquirer
+void inquirer
+  // @ts-expect-error - TS has issues with inferring the correct type for arrays of questions
   .prompt([
     {
-      type: 'list',
+      type: 'list' as const,
       loop: false,
       name: 'letter',
       message: "What's your favorite letter?",
       choices,
     },
     {
-      type: 'checkbox',
+      type: 'checkbox' as const,
       name: 'name',
       message: 'Select the letter contained in your name:',
       choices,

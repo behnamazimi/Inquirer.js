@@ -2,9 +2,9 @@
  * Password prompt example
  */
 
-import inquirer from '../dist/esm/index.js';
+import inquirer from 'inquirer';
 
-const requireLetterAndNumber = (value) => {
+const requireLetterAndNumber = (value: string) => {
   if (/\w/.test(value) && /\d/.test(value)) {
     return true;
   }
@@ -12,7 +12,7 @@ const requireLetterAndNumber = (value) => {
   return 'Password need to have at least a letter and a number';
 };
 
-inquirer
+void inquirer
   .prompt([
     {
       type: 'password',

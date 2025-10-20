@@ -2,10 +2,10 @@
  * Heirarchical conversation example
  */
 
-import inquirer from '../dist/esm/index.js';
+import inquirer from 'inquirer';
 
 const directionsPrompt = {
-  type: 'list',
+  type: 'list' as const,
   name: 'direction',
   message: 'Which direction would you like to go?',
   choices: ['Forward', 'Right', 'Left', 'Back'],
@@ -17,8 +17,9 @@ function main() {
 }
 
 function exitHouse() {
-  inquirer.prompt(directionsPrompt).then((answers) => {
-    if (answers.direction === 'Forward') {
+  // @ts-expect-error - TS has issues with inferring the correct type for single question prompts with 'list' type
+  void inquirer.prompt(directionsPrompt).then((answers) => {
+    if (answers['direction'] === 'Forward') {
       console.log('You find yourself in a forest');
       console.log(
         'There is a wolf in front of you; a friendly looking dwarf to the right and an impasse to the left.',
@@ -32,8 +33,9 @@ function exitHouse() {
 }
 
 function encounter1() {
-  inquirer.prompt(directionsPrompt).then((answers) => {
-    const { direction } = answers;
+  // @ts-expect-error - TS has issues with inferring the correct type for single question prompts with 'list' type
+  void inquirer.prompt(directionsPrompt).then((answers) => {
+    const direction = answers['direction'];
     if (direction === 'Forward') {
       console.log('You attempt to fight the wolf');
       console.log(
@@ -52,8 +54,9 @@ function encounter1() {
 }
 
 function encounter2a() {
-  inquirer.prompt(directionsPrompt).then((answers) => {
-    const { direction } = answers;
+  // @ts-expect-error - TS has issues with inferring the correct type for single question prompts with 'list' type
+  void inquirer.prompt(directionsPrompt).then((answers) => {
+    const direction = answers['direction'];
     if (direction === 'Forward') {
       let output = 'You find a painted wooden sign that says:';
       output += ' \n';
@@ -70,9 +73,10 @@ function encounter2a() {
 }
 
 function encounter2b() {
-  inquirer
+  void inquirer
     .prompt({
-      type: 'list',
+      // @ts-expect-error - TS has issues with inferring the correct type for single question prompts with 'list' type
+      type: 'list' as const,
       name: 'weapon',
       message: 'Pick one',
       choices: [

@@ -2,12 +2,13 @@
  * Expand list examples
  */
 
-import inquirer from '../dist/esm/index.js';
+import inquirer from 'inquirer';
 
-inquirer
+void inquirer
+  // @ts-expect-error - TS has issues with inferring the correct type for arrays of questions
   .prompt([
     {
-      type: 'expand',
+      type: 'expand' as const,
       message: 'Conflict on `file.js`: ',
       name: 'overwrite',
       choices: [

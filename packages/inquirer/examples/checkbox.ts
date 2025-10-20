@@ -2,12 +2,13 @@
  * Checkbox list examples
  */
 
-import inquirer from '../dist/esm/index.js';
+import inquirer from 'inquirer';
 
-inquirer
+void inquirer
+  // @ts-expect-error - TS has issues with inferring the correct type for arrays of questions
   .prompt([
     {
-      type: 'checkbox',
+      type: 'checkbox' as const,
       message: 'Select toppings',
       name: 'toppings',
       choices: [
@@ -54,7 +55,7 @@ inquirer
           name: 'Extra cheese',
         },
       ],
-      validate(answer) {
+      validate(answer: string[]) {
         if (answer.length === 0) {
           return 'You must choose at least one topping.';
         }

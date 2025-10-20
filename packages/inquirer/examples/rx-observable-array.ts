@@ -1,17 +1,14 @@
-/**
- * Input prompt example
- */
-
-import inquirer from '../dist/esm/index.js';
+import { from } from 'rxjs';
+import inquirer from 'inquirer';
 
 const questions = [
   {
-    type: 'input',
+    type: 'input' as const,
     name: 'first_name',
     message: "What's your first name",
   },
   {
-    type: 'input',
+    type: 'input' as const,
     name: 'last_name',
     message: "What's your last name",
     default() {
@@ -19,22 +16,10 @@ const questions = [
     },
   },
   {
-    type: 'input',
-    name: 'fav_color',
-    message: "What's your favorite color",
-    transformer(color, answers, flags) {
-      if (flags.isFinal) {
-        return color + '!';
-      }
-
-      return color;
-    },
-  },
-  {
-    type: 'input',
+    type: 'input' as const,
     name: 'phone',
     message: "What's your phone number",
-    validate(value) {
+    validate(value: string) {
       const pass = value.match(
         /^([01])?[\s.-]?\(?(\d{3})\)?[\s.-]?(\d{3})[\s.-]?(\d{4})\s?((?:#|ext\.?\s?|x\.?\s?)(?:\d+)?)?$/i,
       );
@@ -47,6 +32,16 @@ const questions = [
   },
 ];
 
-inquirer.prompt(questions).then((answers) => {
-  console.log(JSON.stringify(answers, null, '  '));
+const observable = from(questions);
+
+inquirer.prompt(observable).ui.process.subscribe({
+  next: (ans) => {
+    console.log('Answer is:', ans);
+  },
+  error: (err) => {
+    console.log('Error:', err);
+  },
+  complete: () => {
+    console.log('Completed');
+  },
 });

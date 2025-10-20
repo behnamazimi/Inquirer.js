@@ -1,33 +1,30 @@
 /**
- * List prompt example
+ * Raw List prompt example
  */
 
-import inquirer from '../dist/esm/index.js';
+import inquirer from 'inquirer';
 
-inquirer
+void inquirer
+  // @ts-expect-error - TS has issues with inferring the correct type for arrays of questions
   .prompt([
     {
-      type: 'list',
+      type: 'rawlist' as const,
       name: 'theme',
       message: 'What do you want to do?',
       choices: [
         'Order a pizza',
         'Make a reservation',
         new inquirer.Separator(),
-        'Ask for opening hours',
-        {
-          name: 'Contact support',
-          disabled: 'Unavailable at this time',
-        },
+        'Ask opening hours',
         'Talk to the receptionist',
       ],
     },
     {
-      type: 'list',
+      type: 'rawlist' as const,
       name: 'size',
-      message: 'What size do you need?',
+      message: 'What size do you need',
       choices: ['Jumbo', 'Large', 'Standard', 'Medium', 'Small', 'Micro'],
-      filter(val) {
+      filter(val: string) {
         return val.toLowerCase();
       },
     },

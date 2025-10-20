@@ -1551,6 +1551,8 @@ __metadata:
 "@repo/hoist-peer-dependencies@workspace:*, @repo/hoist-peer-dependencies@workspace:internals/hoist-peer-dependencies":
   version: 0.0.0-use.local
   resolution: "@repo/hoist-peer-dependencies@workspace:internals/hoist-peer-dependencies"
+  dependencies:
+    type-fest: "npm:^4.0.0"
   languageName: unknown
   linkType: soft
 
